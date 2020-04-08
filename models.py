@@ -43,16 +43,17 @@ class Net(nn.Module):
         self.dense3 = nn.Linear(1000,136)
         
         self.elu = nn.ELU()
+        self.tanh = nn.Tanh()
         
         #initialize weights
-        nn.init.uniform_(self.conv1.weight)
-        nn.init.uniform_(self.conv2.weight)
-        nn.init.uniform_(self.conv3.weight)
-        nn.init.uniform_(self.conv4.weight)
-        nn.init.uniform_(self.conv5.weight)
-        nn.init.xavier_normal_(self.dense1.weight)
-        nn.init.xavier_normal_(self.dense2.weight)
-        nn.init.xavier_normal_(self.dense3.weight)
+        nn.init.uniform_(self.conv1.weight,b=.01)
+        nn.init.uniform_(self.conv2.weight,b=.01)
+        nn.init.uniform_(self.conv3.weight,b=.01)
+        nn.init.uniform_(self.conv4.weight,b=.01)
+        nn.init.uniform_(self.conv5.weight,b=.01)
+        nn.init.xavier_normal_(self.dense1.weight,gain=.7)
+        nn.init.xavier_normal_(self.dense2.weight,gain=.7)
+        nn.init.xavier_normal_(self.dense3.weight,gain=.7)
         
         
         
@@ -100,6 +101,7 @@ class Net(nn.Module):
         x = self.dropout7(x)
         
         x = self.dense3(x)
+        #x = self.tanh(x)*2.5
         
         # a modified x, having gone through all the layers of your model, should be returned
         return x
